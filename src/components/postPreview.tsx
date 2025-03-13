@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface Post {
   id: number;
@@ -15,6 +16,7 @@ interface PropsType {
 }
 
 const PostPreview = ({ post, index }: PropsType) => {
+  const navigate = useNavigate();
   return (
     <motion.article
       key={post.id}
@@ -22,6 +24,7 @@ const PostPreview = ({ post, index }: PropsType) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+      onClick={() => navigate(`/post/${post.id}`)}
     >
       <div className="h-48 overflow-hidden">
         <img
