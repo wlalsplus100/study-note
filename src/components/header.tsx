@@ -13,7 +13,7 @@ const menubar = [
 const Header = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("");
-  const [hoveredTab, setHoveredTab] = useState(null);
+  const [hoveredTab, setHoveredTab] = useState<string | null>(null);
 
   useEffect(() => {
     const currentPath = location.pathname;
