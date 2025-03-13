@@ -79,7 +79,7 @@ function BlogPage() {
       excerpt:
         "AI 기술이 교육 현장에 어떻게 적용되고 있으며, 앞으로의 교육 방식이 어떻게 변화할지 전망합니다.",
       date: "2025년 2월 5일",
-      category: "잡담",
+      category: "과학",
       image: "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e",
     },
     {
@@ -98,6 +98,14 @@ function BlogPage() {
         "Redux, Context API, Recoil 등 다양한 상태 관리 라이브러리의 비교와 적절한 사용 상황을 분석합니다.",
       date: "2025년 1월 20일",
       category: "개발",
+      image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
+    },
+    {
+      id: 10,
+      title: "오늘은",
+      excerpt: "야무지고 재밌고 자극적인 것을 찾기만 하는 우리들",
+      date: "2025년 1월 21일",
+      category: "잡담",
       image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
     },
   ];
