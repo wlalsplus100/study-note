@@ -1,14 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-
-interface Post {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  category: string;
-  image: string;
-}
+import { Post } from "../types/post";
 
 interface PropsType {
   post: Post;
@@ -19,16 +11,16 @@ const PostPreview = ({ post, index }: PropsType) => {
   const navigate = useNavigate();
   return (
     <motion.article
-      key={post.id}
+      key={post._id}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-      onClick={() => navigate(`/post/${post.id}`)}
+      onClick={() => navigate(`/post/${post._id}`)}
     >
       <div className="h-48 overflow-hidden">
         <img
-          src={`${post.image}?w=600&auto=format&q=75`}
+          src={`${post.featured_image}?w=600&auto=format&q=75`}
           alt={post.title}
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
         />
@@ -36,14 +28,15 @@ const PostPreview = ({ post, index }: PropsType) => {
       <div className="p-6">
         <div className="flex justify-between items-center mb-2">
           <span className="text-xs font-semibold px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full">
-            {post.category}
+            {post.category_id.name}
           </span>
-          <span className="text-sm text-gray-500">{post.date}</span>
+          <span className="text-sm text-gray-500">
+            {post.createdAt.slice(0, 10)}
+          </span>
         </div>
         <h3 className="text-xl font-bold mb-2 text-gray-800 hover:text-indigo-600 transition-colors">
           <a href="#">{post.title}</a>
         </h3>
-        <p className="text-gray-600 mb-4">{post.excerpt}</p>
         <a
           href="#"
           className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800"

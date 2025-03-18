@@ -3,37 +3,15 @@ import "./App.css";
 import PostPreview from "./components/postPreview";
 import Footer from "./components/footer";
 import Header from "./components/header";
+import { useEffect } from "react";
+import { usePosts } from "./hooks/usePost";
 
 function App() {
-  const posts = [
-    {
-      id: 1,
-      title: "프론트엔드 개발의 미래",
-      excerpt:
-        "React, Vue, Svelte 등 현대 프레임워크의 발전 방향과 앞으로의 전망에 대해 알아봅니다.",
-      date: "2025년 3월 10일",
-      category: "개발",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
-    },
-    {
-      id: 2,
-      title: "Tailwind CSS로 아름다운 UI 만들기",
-      excerpt:
-        "Utility-first CSS 프레임워크인 Tailwind CSS를 활용해 효율적으로 디자인하는 방법을 소개합니다.",
-      date: "2025년 3월 5일",
-      category: "개발",
-      image: "https://images.unsplash.com/photo-1616400619175-5beda3a17896",
-    },
-    {
-      id: 3,
-      title: "Vite를 활용한 빠른 개발 환경 구축",
-      excerpt:
-        "Vite의 장점과 최적화된 개발 워크플로우를 구축하는 방법에 대해 알아봅니다.",
-      date: "2025년 2월 28일",
-      category: "개발",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-    },
-  ];
+  const { data } = usePosts();
+  const posts = data?.data;
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
 
   const projects = [
     {
@@ -110,9 +88,10 @@ function App() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post, index) => (
-                <PostPreview key={post.id} post={post} index={index} />
-              ))}
+              {posts &&
+                posts.map((post, index) => (
+                  <PostPreview key={post._id} post={post} index={index} />
+                ))}
             </div>
           </div>
         </section>
