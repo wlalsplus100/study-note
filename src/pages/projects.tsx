@@ -1,30 +1,11 @@
 import { motion } from "framer-motion";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import { useProject } from "../hooks/useProject";
 
 function Projects() {
-  const projects = [
-    {
-      id: 1,
-      title: "동물 이미지 분류 웹 앱",
-      description:
-        "머신러닝 모델을 활용한 동물 이미지 분류 웹 애플리케이션입니다. 사용자가 업로드한 이미지에서 동물을 인식하고 분류합니다.",
-      techStack: ["React", "TensorFlow.js", "Tailwind CSS", "Firebase"],
-      githubLink: "https://github.com/wlalsplus100/animal-classifier",
-      demoLink: "https://animal-classifier-demo.vercel.app",
-      image: "https://images.unsplash.com/photo-1517849845537-4d257902454a",
-    },
-    {
-      id: 2,
-      title: "실시간 협업 노트 애플리케이션",
-      description:
-        "여러 사용자가 동시에 노트를 작성하고 편집할 수 있는 실시간 협업 노트 애플리케이션입니다. 마크다운 지원 및 자동 저장 기능이 포함되어 있습니다.",
-      techStack: ["Next.js", "Socket.io", "MongoDB", "Express", "Tailwind CSS"],
-      githubLink: "https://github.com/wlalsplus100/realtime-collab-notes",
-      demoLink: "https://collab-notes-demo.vercel.app",
-      image: "https://images.unsplash.com/photo-1512758017271-d7b84c2113f1",
-    },
-  ];
+  const { data: projectData } = useProject();
+  const projects = projectData?.data;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
@@ -69,7 +50,7 @@ function Projects() {
         <section className="py-12">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              {projects.map((project, index) => (
+              {projects?.map((project, index) => (
                 <motion.div
                   key={project.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -79,7 +60,7 @@ function Projects() {
                 >
                   <div className="h-60 overflow-hidden">
                     <img
-                      src={project.image}
+                      src={project.thumbnail}
                       alt={project.title}
                       className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                     />
@@ -108,7 +89,7 @@ function Projects() {
 
                     <div className="flex space-x-4">
                       <a
-                        href={project.githubLink}
+                        href={project.github_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
@@ -124,7 +105,7 @@ function Projects() {
                         코드 보기
                       </a>
                       <a
-                        href={project.demoLink}
+                        href={project.demo_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
