@@ -16,6 +16,7 @@ import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
 import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
 import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
 import { usePost } from "../hooks/usePost";
+import { useOwner } from "../hooks/useOwner";
 
 // Register languages with SyntaxHighlighter
 SyntaxHighlighter.registerLanguage("javascript", javascript);
@@ -40,15 +41,15 @@ interface Comment {
   id: number;
   content: string;
   date: string;
-  likes: number;
 }
 
 function BlogPost() {
   const { postId } = useParams();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
-  const { data } = usePost(postId);
-  const post = data?.data;
+  const { data: postData } = usePost(postId);
+  const { data: ownerData } = useOwner(postData?.data.owner_id._id || "");
+  const post = postData?.data;
 
   // 새 댓글 추가 함수
   const handleAddComment = () => {
@@ -62,20 +63,10 @@ function BlogPost() {
         month: "long",
         day: "numeric",
       }),
-      likes: 0,
     };
 
     setComments([...comments, newCommentObj]);
     setNewComment("");
-  };
-
-  // 댓글 좋아요 함수
-  const handleLikeComment = (id: number) => {
-    setComments(
-      comments.map((comment) =>
-        comment.id === id ? { ...comment, likes: comment.likes + 1 } : comment
-      )
-    );
   };
 
   return (
@@ -140,7 +131,7 @@ function BlogPost() {
                     <p className="font-medium text-gray-900">
                       {post.owner_id.username}
                     </p>
-                    <p className="text-sm text-gray-600">{"꿈을 꾸는 사람"}</p>
+                    <p className="text-sm text-gray-600">{ownerData?.bio}</p>
                   </div>
                 </div>
               </div>
@@ -250,10 +241,10 @@ function BlogPost() {
                   <h3 className="text-xl font-bold mb-2">
                     글쓴이: {post.owner_id.username}
                   </h3>
-                  <p className="text-gray-600 mb-4">{"꿈을 꾸는 사람"}</p>
+                  <p className="text-gray-600 mb-4">{ownerData?.bio}</p>
                   <div className="flex space-x-4">
                     <a
-                      href="#"
+                      href="https://github.com/wlalsplus100"
                       className="text-indigo-600 hover:text-indigo-800"
                     >
                       GitHub
@@ -295,22 +286,6 @@ function BlogPost() {
                         </div>
                         <p className="text-gray-800">{comment.content}</p>
                       </div>
-                    </div>
-                    <div className="mt-4 flex items-center">
-                      <button
-                        onClick={() => handleLikeComment(comment.id)}
-                        className="flex items-center text-gray-500 hover:text-indigo-600 transition-colors"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-1"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                        >
-                          <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                        </svg>
-                        <span>{comment.likes}</span>
-                      </button>
                     </div>
                   </motion.div>
                 ))}
