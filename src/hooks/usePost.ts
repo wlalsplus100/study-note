@@ -14,3 +14,4 @@ export const usePost = (id: string | undefined) => {
     queryFn: () => getPost(id),
   });
 };
+

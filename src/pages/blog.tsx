@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import PostPreview from "../components/postPreview";
 import Footer from "../components/footer";
 import Header from "../components/header";
@@ -10,9 +11,31 @@ function BlogPage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPosts, setFilteredPosts] = useState<Post[] | []>([]);
+  const [allPosts, setAllposts] = useState<Post[] | undefined>();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { data } = usePosts();
 
-  const allPosts = data?.data;
+  useEffect(() => {
+    setAllposts(data?.data);
+  }, [data]);
+
+  // 로그인 상태 확인
+  useEffect(() => {
+    const checkAuthStatus = () => {
+      const token = localStorage.getItem("accessToken");
+      setIsAuthenticated(!!token);
+      console.log(!!token);
+    };
+
+    checkAuthStatus();
+
+    // 로컬 스토리지 변경 감지를 위한 이벤트 리스너
+    window.addEventListener("storage", checkAuthStatus);
+
+    return () => {
+      window.removeEventListener("storage", checkAuthStatus);
+    };
+  }, []);
 
   // 모든 카테고리 추출
   const categories = [
@@ -42,7 +65,7 @@ function BlogPage() {
     }
 
     setFilteredPosts(result ?? []);
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, allPosts]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
@@ -117,6 +140,34 @@ function BlogPage() {
 
         <section className="py-8">
           <div className="max-w-6xl mx-auto">
+            {isAuthenticated && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="mb-8 flex justify-end"
+              >
+                <Link
+                  to="/post/create"
+                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium rounded-lg hover:shadow-lg transition-shadow"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  포스트 추가
+                </Link>
+              </motion.div>
+            )}
+
             {filteredPosts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post, index) => (
