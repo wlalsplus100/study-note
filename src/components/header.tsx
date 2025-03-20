@@ -7,7 +7,6 @@ const menubar = [
   { title: "blog", link: "/blog" },
   { title: "projects", link: "/projects" },
   { title: "about", link: "/about" },
-  { title: "contact", link: "/contact" },
 ];
 
 const Header = () => {
