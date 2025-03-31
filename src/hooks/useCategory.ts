@@ -1,9 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCategory } from "../apis/category";
+import { getCategories, getCategory } from "../apis/category";
 
-export const useCategory = () => {
+export const useCategories = () => {
   return useQuery({
     queryKey: ["getCategories"],
-    queryFn: getCategory,
+    queryFn: getCategories,
+  });
+};
+
+export const useCategory = (id: string) => {
+  return useQuery({
+    queryKey: ["getCategory", id],
+    queryFn: () => getCategory(id),
   });
 };

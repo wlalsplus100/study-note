@@ -17,3 +17,12 @@ export interface Post {
   updatedAt: string;
   __v: number;
 }
+
+export interface PostPost {
+  title: string;
+  content_markdown: string;
+  featured_image: File;
+  owner_id: string;
+  category_id: string;
+  published_at: string;
+}

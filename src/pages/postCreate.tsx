@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
-import { useCategory } from "../hooks/useCategory";
+import { useCategories } from "../hooks/useCategory";
+import { usePostPost } from "../hooks/usePost";
 
 function PostCreatePage() {
   const [title, setTitle] = useState("");
@@ -13,8 +14,16 @@ function PostCreatePage() {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  const { data: categoryData } = useCategory();
+  const { data: categoryData } = useCategories();
   const categoriesData = categoryData?.data;
+  const { mutate, isSuccess, isError } = usePostPost(
+    title,
+    "67d8b916906962172a188a33",
+    selectedCategory,
+    content,
+    thumbnail as File,
+    new Date().toDateString()
+  );
 
   // 로그인 상태 확인
   useEffect(() => {
@@ -43,6 +52,17 @@ function PostCreatePage() {
   if (!isAuthenticated) {
     return null; // 인증 체크 중이거나 인증되지 않은 경우 렌더링하지 않음
   }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title || !content || !selectedCategory || !thumbnail) {
+      alert("모든 필드를 채워주세요.");
+      return;
+    }
+
+    mutate();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
@@ -73,7 +93,7 @@ function PostCreatePage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="bg-white rounded-xl shadow-md p-8"
             >
-              <form>
+              <form onSubmit={handleSubmit}>
                 {/* 제목 입력 */}
                 <div className="mb-6">
                   <label

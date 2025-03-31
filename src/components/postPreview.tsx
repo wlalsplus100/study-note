@@ -20,7 +20,7 @@ const PostPreview = ({ post, index }: PropsType) => {
     >
       <div className="h-48 overflow-hidden">
         <img
-          src={`${post.featured_image}?w=600&auto=format&q=75`}
+          src={`http://localhost:3004${post.featured_image}?w=600&auto=format&q=75`}
           alt={post.title}
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
         />

@@ -104,7 +104,7 @@ function BlogPost() {
 
               <div className="rounded-xl overflow-hidden h-96 mb-8">
                 <img
-                  src={post.featured_image}
+                  src={`http://localhost:3004${post.featured_image}`}
                   alt={post.title}
                   className="w-full h-full object-cover"
                 />

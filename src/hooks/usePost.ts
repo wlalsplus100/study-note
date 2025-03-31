@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { getPost, getPosts } from "../apis/post";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getPost, getPosts, postPost } from "../apis/post";
 
 export const usePosts = () => {
   return useQuery({
@@ -15,3 +15,24 @@ export const usePost = (id: string | undefined) => {
   });
 };
 
+export const usePostPost = (
+  title: string,
+  owner_id: string,
+  category_id: string,
+  content_markdown: string,
+  featured_image: File,
+  published_at: string
+) => {
+  return useMutation({
+    mutationKey: ["postPost"],
+    mutationFn: () =>
+      postPost({
+        title,
+        owner_id,
+        category_id,
+        content_markdown,
+        featured_image,
+        published_at,
+      }),
+  });
+};
