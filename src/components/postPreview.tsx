@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Post } from "../types/post";
+import { useDeletePost } from "../hooks/usePost";
 
 interface PropsType {
   post: Post;
@@ -9,42 +10,69 @@ interface PropsType {
 
 const PostPreview = ({ post, index }: PropsType) => {
   const navigate = useNavigate();
+  const { mutate: deletePost } = useDeletePost();
+  const isAuthenticated = !!localStorage.getItem("accessToken");
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.confirm("정말로 이 포스트를 삭제하시겠습니까?")) {
+      deletePost(post.id);
+    }
+  };
+
   return (
     <motion.article
-      key={post._id}
+      key={post.id}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-      onClick={() => navigate(`/post/${post._id}`)}
+      className="overflow-hidden transition-shadow bg-white shadow-lg rounded-xl hover:shadow-xl"
+      onClick={() => navigate(`/post/${post.id}`)}
     >
       <div className="h-48 overflow-hidden">
         <img
-          src={`http://localhost:3004${post.featured_image}?w=600&auto=format&q=75`}
+          src={post.featuredImage ? 
+            (post.featuredImage.startsWith('http') 
+              ? post.featuredImage 
+              : `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${post.featuredImage}`)
+            : '/placeholder-image.jpg'}
           alt={post.title}
-          className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
         />
       </div>
       <div className="p-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-xs font-semibold px-2 py-1 bg-indigo-100 text-indigo-800 rounded-full">
-            {post.category_id.name}
+        <div className="flex items-center justify-between mb-2">
+          <span className="px-2 py-1 text-xs font-semibold text-indigo-800 bg-indigo-100 rounded-full">
+            {post.category?.name || '카테고리 없음'}
           </span>
-          <span className="text-sm text-gray-500">
-            {post.createdAt.slice(0, 10)}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-500">
+              {new Date(post.createdAt).toLocaleDateString()}
+            </span>
+            {isAuthenticated && (
+              <button
+                onClick={handleDelete}
+                className="p-1 text-red-500 transition-colors hover:text-red-700"
+                aria-label="포스트 삭제"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
-        <h3 className="text-xl font-bold mb-2 text-gray-800 hover:text-indigo-600 transition-colors">
+        <h3 className="mb-2 text-xl font-bold text-gray-800 transition-colors hover:text-indigo-600">
           <a href="#">{post.title}</a>
         </h3>
         <a
           href="#"
-          className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800"
+          className="inline-flex items-center font-medium text-indigo-600 hover:text-indigo-800"
         >
           더 읽기
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4 ml-1"
+            className="w-4 h-4 ml-1"
             viewBox="0 0 20 20"
             fill="currentColor"
           >

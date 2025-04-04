@@ -1,28 +1,38 @@
 export interface Post {
-  _id: string;
+  id: number;
   title: string;
-  content_markdown: string;
-  featured_image: string;
-  view_count: number;
-  owner_id: {
-    _id: string;
+  contentMarkdown: string;
+  contentHtml?: string;
+  featuredImage?: string;
+  viewCount: number;
+  publishedAt?: Date;
+  owner: {
+    id: number;
     username: string;
-    profile_image: string;
+    profileImage?: string;
+    bio?: string;
   };
-  category_id: {
-    _id: string;
+  category: {
+    id: number;
     name: string;
+    description?: string;
   };
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  comments?: {
+    id: number;
+    nickname: string;
+    content: string;
+    createdAt: Date;
+  }[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface PostPost {
   title: string;
-  content_markdown: string;
-  featured_image: File;
-  owner_id: string;
-  category_id: string;
-  published_at: string;
+  contentMarkdown: string;
+  contentHtml?: string;
+  featuredImage: File;
+  ownerId: number;
+  categoryId: number;
+  publishedAt?: Date;
 }

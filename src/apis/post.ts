@@ -14,20 +14,25 @@ export const getPost = async (id: string | undefined) => {
 
 export const postPost = async ({
   title,
-  owner_id,
-  category_id,
-  content_markdown,
-  featured_image,
-  published_at,
+  ownerId,
+  categoryId,
+  contentMarkdown,
+  featuredImage,
+  publishedAt,
 }: PostPost) => {
-  const imgurl = (await imgUpload(featured_image)).url;
+  const imgurl = (await imgUpload(featuredImage)).url;
   const response = await instance.post("posts", {
     title,
-    owner_id,
-    category_id,
-    content_markdown,
-    featured_image: imgurl,
-    published_at,
+    ownerId,
+    categoryId,
+    contentMarkdown,
+    featuredImage: imgurl,
+    publishedAt,
   });
+  return response;
+};
+
+export const deletePost = async (id: number) => {
+  const response = await instance.delete(`posts/${id}`);
   return response;
 };

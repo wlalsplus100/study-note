@@ -6,7 +6,7 @@ export const getCategories = async () => {
   return response;
 };
 
-export const getCategory = async (id: string) => {
+export const getCategory = async (id: number) => {
   const response = await instance.get<Category>(`categories/${id}`);
   return response;
 };

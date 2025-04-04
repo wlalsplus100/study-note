@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
 import Footer from "../components/footer";
@@ -6,8 +6,7 @@ import Header from "../components/header";
 import ReactMarkdown from "react-markdown";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import remarkGfm from "remark-gfm";
-// Import language support - add additional languages as needed
+import remarkGfm from "remark-gfm"; 
 import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
 import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
 import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx";
@@ -17,8 +16,7 @@ import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
 import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
 import { usePost } from "../hooks/usePost";
 import { useOwner } from "../hooks/useOwner";
-
-// Register languages with SyntaxHighlighter
+ 
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
 SyntaxHighlighter.registerLanguage("jsx", jsx);
@@ -26,14 +24,17 @@ SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("bash", bash);
 SyntaxHighlighter.registerLanguage("css", css);
 SyntaxHighlighter.registerLanguage("json", json);
-
-// Type definition for code block props
-interface CodeProps {
-  node?: any;
+ 
+interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+  node?: {
+    type?: string;
+    tagName?: string;
+    properties?: Record<string, unknown>;
+    children?: Array<unknown>;
+  };
   inline?: boolean;
   className?: string;
-  children?: React.ReactNode; // Make children optional with ? mark
-  [key: string]: any;
+  children?: React.ReactNode;
 }
 
 // Comment interface
@@ -48,8 +49,8 @@ function BlogPost() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const { data: postData } = usePost(postId);
-  const { data: ownerData } = useOwner(postData?.data.owner_id._id || "");
   const post = postData?.data;
+  const { data: ownerData } = useOwner(post?.owner?.id?.toString() || "");
 
   // 새 댓글 추가 함수
   const handleAddComment = () => {
@@ -73,7 +74,7 @@ function BlogPost() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
       <Header />
 
-      <main className="container mx-auto px-4 pt-24 pb-12">
+      <main className="container px-4 pt-24 pb-12 mx-auto">
         {post ? (
           <div className="max-w-4xl mx-auto">
             <motion.div
@@ -84,11 +85,11 @@ function BlogPost() {
               <div className="mb-4">
                 <Link
                   to="/blog"
-                  className="text-indigo-600 hover:text-indigo-800 flex items-center"
+                  className="flex items-center text-indigo-600 hover:text-indigo-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-1"
+                    className="w-5 h-5 mr-1"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -102,36 +103,42 @@ function BlogPost() {
                 </Link>
               </div>
 
-              <div className="rounded-xl overflow-hidden h-96 mb-8">
+              <div className="mb-8 overflow-hidden rounded-xl h-96">
                 <img
-                  src={`http://localhost:3004${post.featured_image}`}
+                  src={post.featuredImage ? 
+                    (post.featuredImage.startsWith('http') 
+                      ? post.featuredImage 
+                      : `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${post?.featuredImage}`)
+                    : '/placeholder-image.jpg'}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  className="object-cover w-full h-full"
                 />
               </div>
 
               <div className="mb-12">
-                <div className="flex items-center text-sm text-indigo-600 mb-3">
+                <div className="flex items-center mb-3 text-sm text-indigo-600">
                   <span className="px-3 py-1 bg-indigo-100 rounded-full">
-                    {post.category_id.name}
+                    {post.category?.name || '카테고리 없음'}
                   </span>
                   <span className="mx-3">•</span>
-                  <span>{post.createdAt.slice(0, 10)}</span>
+                  <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
+                <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
                   {post.title}
                 </h1>
                 <div className="flex items-center">
                   <img
-                    src={`http://localhost:3004${post.owner_id.profile_image}`}
-                    alt={post.owner_id.username}
-                    className="w-12 h-12 rounded-full object-cover mr-4"
+                    src={post.owner?.profileImage
+                      ? `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${post?.owner?.profileImage}`
+                      : '/default-profile.jpg'}
+                    alt={post.owner?.username || '작성자'}
+                    className="object-cover w-12 h-12 mr-4 rounded-full"
                   />
                   <div>
                     <p className="font-medium text-gray-900">
-                      {post.owner_id.username}
+                      {post.owner?.username || '작성자'}
                     </p>
-                    <p className="text-sm text-gray-600">{ownerData?.bio}</p>
+                    <p className="text-sm text-gray-600">{ownerData?.bio || ''}</p>
                   </div>
                 </div>
               </div>
@@ -142,7 +149,6 @@ function BlogPost() {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   code({
-                    node,
                     inline,
                     className,
                     children,
@@ -151,6 +157,7 @@ function BlogPost() {
                     const match = /language-(\w+)/.exec(className || "");
                     return !inline && match ? (
                       <SyntaxHighlighter
+                        // @ts-expect-error - react-syntax-highlighter의 타입 정의 문제로 인한 임시 해결책
                         style={vscDarkPlus}
                         language={match[1]}
                         PreTag="div"
@@ -164,87 +171,91 @@ function BlogPost() {
                       </code>
                     );
                   },
-                  h1: ({ node, ...props }) => (
-                    <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />
+                  h1: ({ ...props }) => (
+                    <h1 className="mt-8 mb-4 text-3xl font-bold" {...props} />
                   ),
-                  h2: ({ node, ...props }) => (
-                    <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />
+                  h2: ({ ...props }) => (
+                    <h2 className="mt-6 mb-3 text-2xl font-bold" {...props} />
                   ),
-                  h3: ({ node, ...props }) => (
-                    <h3 className="text-xl font-bold mt-5 mb-2" {...props} />
+                  h3: ({ ...props }) => (
+                    <h3 className="mt-5 mb-2 text-xl font-bold" {...props} />
                   ),
-                  p: ({ node, ...props }) => <p className="my-4" {...props} />,
-                  ul: ({ node, ...props }) => (
-                    <ul className="list-disc pl-8 my-4" {...props} />
+                  p: ({ ...props }) => <p className="my-4" {...props} />,
+                  ul: ({ ...props }) => (
+                    <ul className="pl-8 my-4 list-disc" {...props} />
                   ),
-                  ol: ({ node, ...props }) => (
-                    <ol className="list-decimal pl-8 my-4" {...props} />
+                  ol: ({ ...props }) => (
+                    <ol className="pl-8 my-4 list-decimal" {...props} />
                   ),
-                  li: ({ node, ...props }) => (
+                  li: ({ ...props }) => (
                     <li className="mb-1" {...props} />
                   ),
-                  blockquote: ({ node, ...props }) => (
+                  blockquote: ({ ...props }) => (
                     <blockquote
-                      className="border-l-4 border-indigo-300 pl-4 italic text-gray-700 my-4"
+                      className="pl-4 my-4 italic text-gray-700 border-l-4 border-indigo-300"
                       {...props}
                     />
                   ),
-                  a: ({ node, ...props }) => (
+                  a: ({ ...props }) => (
                     <a
-                      className="text-indigo-600 hover:text-indigo-800 underline"
+                      className="text-indigo-600 underline hover:text-indigo-800"
                       {...props}
                     />
                   ),
-                  table: ({ node, ...props }) => (
-                    <div className="overflow-x-auto my-6">
+                  table: ({ ...props }) => (
+                    <div className="my-6 overflow-x-auto">
                       <table
-                        className="min-w-full border-collapse border border-gray-300"
+                        className="min-w-full border border-collapse border-gray-300"
                         {...props}
                       />
                     </div>
                   ),
-                  th: ({ node, ...props }) => (
+                  th: ({ ...props }) => (
                     <th
-                      className="border border-gray-300 bg-gray-100 px-4 py-2 text-left"
+                      className="px-4 py-2 text-left bg-gray-100 border border-gray-300"
                       {...props}
                     />
                   ),
-                  td: ({ node, ...props }) => (
+                  td: ({ ...props }) => (
                     <td
-                      className="border border-gray-300 px-4 py-2"
+                      className="px-4 py-2 border border-gray-300"
                       {...props}
                     />
                   ),
-                  hr: ({ node, ...props }) => (
+                  hr: ({ ...props }) => (
                     <hr className="my-6 border-t border-gray-300" {...props} />
                   ),
-                  img: ({ node, ...props }) => (
+                  img: ({ ...props }) => (
                     <img
-                      className="max-w-full h-auto rounded my-4"
+                      className="h-auto max-w-full my-4 rounded"
                       {...props}
                     />
                   ),
                 }}
               >
-                {post.content_markdown}
+                {post.contentMarkdown}
               </ReactMarkdown>
             </div>
 
-            <div className="mt-16 border-t border-gray-200 pt-8">
-              <div className="flex flex-col md:flex-row items-center bg-gray-50 rounded-xl p-8">
+            <div className="pt-8 mt-16 border-t border-gray-200">
+              <div className="flex flex-col items-center p-8 md:flex-row bg-gray-50 rounded-xl">
                 <img
-                  src={`http://localhost:3004${post.owner_id.profile_image}`}
-                  alt={post.owner_id.username}
-                  className="w-24 h-24 rounded-full object-cover mb-4 md:mb-0 md:mr-6"
+                  src={post.owner?.profileImage
+                    ? `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${post?.owner?.profileImage}`
+                    : '/default-profile.jpg'}
+                  alt={post.owner?.username || '작성자'}
+                  className="object-cover w-24 h-24 mb-4 rounded-full md:mb-0 md:mr-6"
                 />
                 <div>
-                  <h3 className="text-xl font-bold mb-2">
-                    글쓴이: {post.owner_id.username}
+                  <h3 className="mb-2 text-xl font-bold">
+                    글쓴이: {post.owner?.username || '작성자'}
                   </h3>
-                  <p className="text-gray-600 mb-4">{ownerData?.bio}</p>
+                  <p className="mb-4 text-gray-600">{ownerData?.bio || ''}</p>
                   <div className="flex space-x-4">
                     <a
                       href="https://github.com/wlalsplus100"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-indigo-600 hover:text-indigo-800"
                     >
                       GitHub
@@ -261,23 +272,23 @@ function BlogPost() {
             </div>
 
             {/* 댓글 섹션 */}
-            <div className="mt-16 border-t border-gray-200 pt-8">
-              <h2 className="text-2xl font-bold mb-6">댓글</h2>
+            <div className="pt-8 mt-16 border-t border-gray-200">
+              <h2 className="mb-6 text-2xl font-bold">댓글</h2>
 
               {/* 댓글 목록 */}
-              <div className="space-y-6 mb-8">
+              <div className="mb-8 space-y-6">
                 {comments.map((comment) => (
                   <motion.div
                     key={comment.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="bg-white p-6 rounded-xl shadow-sm"
+                    className="p-6 bg-white shadow-sm rounded-xl"
                   >
                     <div className="flex items-start justify-between">
                       <div>
                         <div className="flex items-center mb-2">
-                          <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold text-sm mr-3">
+                          <div className="flex items-center justify-center w-8 h-8 mr-3 text-sm font-bold text-indigo-600 bg-indigo-100 rounded-full">
                             익명
                           </div>
                           <span className="text-sm text-gray-500">
@@ -292,23 +303,23 @@ function BlogPost() {
               </div>
 
               {/* 댓글 입력 폼 */}
-              <div className="bg-white p-6 rounded-xl shadow-sm">
-                <h3 className="text-lg font-bold mb-4">댓글 작성</h3>
+              <div className="p-6 bg-white shadow-sm rounded-xl">
+                <h3 className="mb-4 text-lg font-bold">댓글 작성</h3>
                 <textarea
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="댓글을 작성해주세요"
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500 transition-colors resize-none h-32"
+                  className="w-full h-32 p-4 transition-colors border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-500"
                 ></textarea>
-                <div className="mt-4 flex justify-end">
+                <div className="flex justify-end mt-4">
                   <button
                     onClick={handleAddComment}
-                    className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+                    className="px-6 py-2 font-medium text-white transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700"
                   >
                     등록하기
                   </button>
                 </div>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="mt-2 text-sm text-gray-500">
                   * 댓글은 익명으로 등록됩니다
                 </p>
               </div>
@@ -316,7 +327,7 @@ function BlogPost() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-64">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            <h2 className="mb-4 text-2xl font-bold text-gray-800">
               포스트를 찾을 수 없습니다
             </h2>
             <Link to="/" className="text-indigo-600 hover:text-indigo-800">

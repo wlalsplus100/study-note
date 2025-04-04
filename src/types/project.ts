@@ -1,12 +1,17 @@
 export interface Project {
-  id: string;
+  id: number;
   title: string;
-  description: string;
-  github_url: string;
-  demo_url: string;
-  thumbnail: string;
-  owner_id: string;
-  createdAt: string;
-  updatedAt: string;
-  techStack: string[];
+  description?: string;
+  githubUrl?: string;
+  demoUrl?: string;
+  thumbnail?: string;
+  techStack?: string[];
+  owner: {
+    id: number;
+    username: string;
+    profileImage?: string;
+    bio?: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
 }

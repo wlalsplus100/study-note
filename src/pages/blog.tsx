@@ -40,7 +40,11 @@ function BlogPage() {
   // 모든 카테고리 추출
   const categories = [
     "all",
-    ...new Set(allPosts && allPosts.map((post) => post.category_id.name)),
+    ...new Set(
+      allPosts
+        ?.filter((post) => post.category?.name)
+        .map((post) => post.category.name)
+    ),
   ];
 
   // 포스트 필터링 함수
@@ -50,7 +54,7 @@ function BlogPage() {
     // 카테고리 필터링
     if (activeCategory !== "all") {
       result = result?.filter(
-        (post) => post.category_id.name === activeCategory
+        (post) => post.category?.name === activeCategory
       );
     }
 
@@ -60,7 +64,7 @@ function BlogPage() {
       result = result?.filter(
         (post) =>
           post.title.toLowerCase().includes(query) ||
-          post.category_id.name.toLowerCase().includes(query)
+          post.category?.name.toLowerCase().includes(query)
       );
     }
 
@@ -172,7 +176,7 @@ function BlogPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post, index) => (
                   <motion.div
-                    key={post._id}
+                    key={post.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}

@@ -6,8 +6,7 @@ export const imgUpload = async (img: File) => {
   formData.append("file", img);
   const response = await instance.post<Uploads>("uploads", formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      'Content-Type': 'multipart/form-data',
     },
   });
   return response.data;

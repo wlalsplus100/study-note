@@ -1,38 +1,62 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getPost, getPosts, postPost } from "../apis/post";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getPost, getPosts, postPost, deletePost } from "../apis/post";
 
 export const usePosts = () => {
   return useQuery({
     queryKey: ["getPosts"],
-    queryFn: getPosts,
+    queryFn: async () => {
+      const response = await getPosts();
+      console.log('Posts response:', response);
+      return response;
+    },
   });
 };
 
 export const usePost = (id: string | undefined) => {
   return useQuery({
     queryKey: ["getPost", id],
-    queryFn: () => getPost(id),
+    queryFn: async () => {
+      const response = await getPost(id);
+      console.log('Post response:', response);
+      return response;
+    },
+    enabled: !!id
   });
 };
 
 export const usePostPost = (
   title: string,
-  owner_id: string,
-  category_id: string,
-  content_markdown: string,
-  featured_image: File,
-  published_at: string
+  ownerId: number,
+  categoryId: number,
+  contentMarkdown: string,
+  featuredImage: File,
+  publishedAt: Date,
+  options?: {
+    onSuccess?: () => void;
+  }
 ) => {
   return useMutation({
     mutationKey: ["postPost"],
     mutationFn: () =>
       postPost({
         title,
-        owner_id,
-        category_id,
-        content_markdown,
-        featured_image,
-        published_at,
+        ownerId,
+        categoryId,
+        contentMarkdown,
+        featuredImage,
+        publishedAt,
       }),
+    onSuccess: options?.onSuccess,
+  });
+};
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["deletePost"],
+    mutationFn: (id: number) => deletePost(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getPosts"] });
+    },
   });
 };
