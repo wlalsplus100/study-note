@@ -37,7 +37,7 @@ const Footer = () => {
             <ul className="space-y-2 h-[100px] flex flex-col flex-wrap">
               <li>
                 <a
-                  href="#"
+                  href="/blog?category=국어"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   국어
@@ -45,7 +45,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/blog?category=수학"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   수학
@@ -53,7 +53,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/blog?category=사회"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   사회
@@ -61,7 +61,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/blog?category=과학"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   과학
@@ -69,7 +69,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/blog?category=개발"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   개발
@@ -77,7 +77,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/blog?category=잡담"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   잡담

@@ -61,7 +61,7 @@ function Projects() {
                   <div className="overflow-hidden h-60">
                     <img
                       src={project?.thumbnail?.startsWith('/') 
-                        ? `${import.meta.env.VITE_BASE_URL.replace('/api/', '')}${project.thumbnail}`
+                        ? `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${project.thumbnail}`
                         : project.thumbnail}
                       alt={project.title}
                       className="object-cover w-full h-full transition-transform duration-500 transform hover:scale-105"

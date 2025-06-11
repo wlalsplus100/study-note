@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { useLogin } from "../hooks/useLogin";
@@ -7,19 +8,28 @@ import { useLogin } from "../hooks/useLogin";
 function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { mutate, data } = useLogin(email, password);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { mutate, data, isError } = useLogin(email, password);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("어드민 로그인 시도:", email);
+    setError("");
     mutate();
   };
 
   useEffect(() => {
     if (data?.data) {
       localStorage.setItem("accessToken", data.data.access_token);
+      navigate("/");
     }
-  }, [data]);
+  }, [data, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      setError("이메일 또는 비밀번호가 올바르지 않습니다.");
+    }
+  }, [isError]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
@@ -74,6 +84,12 @@ function AdminLoginPage() {
                     required
                   />
                 </div>
+
+                {error && (
+                  <div className="p-2 text-sm text-red-600 bg-red-50 rounded-lg">
+                    {error}
+                  </div>
+                )}
 
                 <button
                   type="submit"

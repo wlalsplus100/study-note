@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import PostPreview from "../components/postPreview";
 import Footer from "../components/footer";
 import Header from "../components/header";
@@ -8,7 +8,10 @@ import { usePosts } from "../hooks/usePost";
 import { Post } from "../types/post";
 
 function BlogPage() {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchParams] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState(
+    searchParams.get("category") || "all"
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPosts, setFilteredPosts] = useState<Post[] | []>([]);
   const [allPosts, setAllposts] = useState<Post[] | undefined>();
@@ -53,9 +56,7 @@ function BlogPage() {
 
     // 카테고리 필터링
     if (activeCategory !== "all") {
-      result = result?.filter(
-        (post) => post.category?.name === activeCategory
-      );
+      result = result?.filter((post) => post.category?.name === activeCategory);
     }
 
     // 검색어 필터링

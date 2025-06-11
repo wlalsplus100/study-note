@@ -1,54 +1,75 @@
-# React + TypeScript + Vite
+# Study Note
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+학습 노트 작성을 위한 웹 애플리케이션입니다. React와 TypeScript를 기반으로 구축되었으며, 마크다운 형식으로 노트를 작성하고 관리할 수 있습니다.
 
-Currently, two official plugins are available:
+## 기술 스택
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React 19
+- **언어**: TypeScript
+- **빌드 도구**: Vite
+- **스타일링**: TailwindCSS
+- **상태 관리**: TanStack Query (React Query)
+- **라우팅**: React Router DOM
+- **마크다운 렌더링**: React Markdown, React Syntax Highlighter
+- **애니메이션**: Framer Motion
 
-## Expanding the ESLint configuration
+## 주요 기능
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 마크다운 형식의 노트 작성 및 편집
+- 코드 블록 문법 하이라이팅
+- 반응형 디자인
+- 실시간 마크다운 프리뷰
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 프로젝트 구조
+
+```
+study-note/
+├── src/
+│   ├── apis/         # API 통신 관련 코드
+│   ├── assets/       # 정적 리소스
+│   ├── components/   # 재사용 가능한 컴포넌트
+│   ├── hooks/        # 커스텀 훅
+│   ├── pages/        # 페이지 컴포넌트
+│   ├── types/        # TypeScript 타입 정의
+│   ├── App.tsx       # 메인 애플리케이션 컴포넌트
+│   ├── router.tsx    # 라우팅 설정
+│   └── main.tsx      # 애플리케이션 진입점
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 시작하기
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 필수 조건
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Node.js 18.0.0 이상
+- Yarn 패키지 매니저
+
+### 설치
+
+```bash
+# 의존성 설치
+yarn install
+
+# 개발 서버 실행
+yarn dev
+
+# 프로덕션 빌드
+yarn build
 ```
+
+### 스크립트
+
+- `yarn dev`: 개발 서버 실행 (Vite)
+- `yarn build`: 프로덕션용 빌드 생성
+- `yarn lint`: ESLint를 사용한 코드 검사
+- `yarn preview`: 빌드된 프로덕션 버전 미리보기
+
+## 개발 가이드
+
+- ESLint를 통한 코드 품질 관리
+- TypeScript를 사용한 정적 타입 검사
+- 컴포넌트 기반 아키텍처
+- React Query를 활용한 서버 상태 관리
+
+## 라이선스
+
+이 프로젝트는 비공개 프로젝트입니다.

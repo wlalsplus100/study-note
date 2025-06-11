@@ -6,6 +6,7 @@ import Header from "./components/header";
 import { useEffect } from "react";
 import { usePosts } from "./hooks/usePost";
 import { useProject } from "./hooks/useProject";
+import { Link } from "react-router-dom";
 
 function App() {
   const { data: postData } = usePosts();
@@ -38,9 +39,11 @@ function App() {
               다룹니다.
             </p>
             <div className="flex flex-col justify-center gap-4 md:flex-row">
-              <button className="px-8 py-3 font-medium text-white transition-shadow rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg">
-                최신 글 보기
-              </button>
+              <Link to="/blog">
+                <button className="px-8 py-3 font-medium text-white transition-shadow rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg">
+                  다른 글 보기
+                </button>
+              </Link>
             </div>
           </motion.div>
         </section>
@@ -71,9 +74,11 @@ function App() {
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {posts &&
-                posts.map((post, index) => (
-                  <PostPreview key={post.id} post={post} index={index} />
-                ))}
+                posts
+                  .slice(posts.length - 4, posts.length)
+                  .map((post, index) => (
+                    <PostPreview key={post.id} post={post} index={index} />
+                  ))}
             </div>
           </div>
         </section>
@@ -113,7 +118,9 @@ function App() {
                 >
                   <div className="h-48 overflow-hidden">
                     <img
-                      src={`${import.meta.env.VITE_BASE_URL.slice(0, -1)}${project.thumbnail}`}
+                      src={`${import.meta.env.VITE_BASE_URL.slice(0, -1)}${
+                        project.thumbnail
+                      }`}
                       alt={project.title}
                       className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
                     />
