@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { useCategories } from "../hooks/useCategory";
-import { usePostPost } from "../hooks/usePost"; 
+import { usePostPost } from "../hooks/usePost";
 
 function PostCreatePage() {
   const [title, setTitle] = useState("");
@@ -26,7 +26,7 @@ function PostCreatePage() {
     {
       onSuccess: () => {
         navigate("/");
-      }
+      },
     }
   );
 
@@ -70,7 +70,7 @@ function PostCreatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <Header />
 
       <main className="container px-4 pt-24 pb-12 mx-auto">
@@ -84,7 +84,7 @@ function PostCreatePage() {
             <h1 className="mb-4 text-4xl font-extrabold text-transparent md:text-5xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-500 bg-clip-text">
               새 포스트 작성
             </h1>
-            <p className="mb-8 text-xl text-gray-600">
+            <p className="mb-8 text-xl text-gray-600 dark:text-gray-300">
               여러분의 생각과 지식을 공유해보세요.
             </p>
           </motion.div>
@@ -96,14 +96,14 @@ function PostCreatePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="p-8 bg-white shadow-md rounded-xl"
+              className="p-8 bg-white dark:bg-gray-800 shadow-md rounded-xl border border-gray-200 dark:border-gray-700"
             >
               <form onSubmit={handleSubmit}>
                 {/* 제목 입력 */}
                 <div className="mb-6">
                   <label
                     htmlFor="title"
-                    className="block mb-2 font-medium text-gray-700"
+                    className="block mb-2 font-medium text-gray-700 dark:text-gray-200"
                   >
                     제목
                   </label>
@@ -113,7 +113,7 @@ function PostCreatePage() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="포스트 제목을 입력하세요"
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -122,7 +122,7 @@ function PostCreatePage() {
                 <div className="mb-6">
                   <label
                     htmlFor="category"
-                    className="block mb-2 font-medium text-gray-700"
+                    className="block mb-2 font-medium text-gray-700 dark:text-gray-200"
                   >
                     카테고리
                   </label>
@@ -130,10 +130,12 @@ function PostCreatePage() {
                     id="category"
                     value={selectedCategory}
                     onChange={(e) => {
-                      const category = categoriesData?.find(c => c.id === Number(e.target.value));
+                      const category = categoriesData?.find(
+                        (c) => c.id === Number(e.target.value)
+                      );
                       setSelectedCategory(category?.id);
                     }}
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     required
                   >
                     <option value="">카테고리 선택</option>
@@ -149,7 +151,7 @@ function PostCreatePage() {
                 <div className="mb-6">
                   <label
                     htmlFor="thumbnail"
-                    className="block mb-2 font-medium text-gray-700"
+                    className="block mb-2 font-medium text-gray-700 dark:text-gray-200"
                   >
                     썸네일 이미지
                   </label>
@@ -163,12 +165,12 @@ function PostCreatePage() {
                     />
                     <label
                       htmlFor="thumbnail"
-                      className="flex items-center justify-center py-4 transition-colors border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-50"
+                      className="flex items-center justify-center py-4 transition-colors border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       <div className="flex flex-col items-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="w-10 h-10 mb-2 text-gray-400"
+                          className="w-10 h-10 mb-2 text-gray-400 dark:text-gray-500"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -180,7 +182,7 @@ function PostCreatePage() {
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                           />
                         </svg>
-                        <span className="text-gray-600">
+                        <span className="text-gray-600 dark:text-gray-300">
                           클릭하여 이미지 업로드
                         </span>
                       </div>
@@ -201,7 +203,7 @@ function PostCreatePage() {
                 <div className="mb-8">
                   <label
                     htmlFor="content"
-                    className="block mb-2 font-medium text-gray-700"
+                    className="block mb-2 font-medium text-gray-700 dark:text-gray-200"
                   >
                     내용
                   </label>
@@ -210,7 +212,7 @@ function PostCreatePage() {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     placeholder="포스트 내용을 입력하세요"
-                    className="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent min-h-48"
+                    className="w-full p-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent min-h-48"
                     rows={12}
                     required
                   />
@@ -221,14 +223,16 @@ function PostCreatePage() {
                   <button
                     type="button"
                     onClick={() => navigate("/blog")}
-                    className="px-6 py-3 font-medium text-gray-700 transition-colors bg-gray-200 rounded-lg hover:bg-gray-300"
+                    className="px-6 py-3 font-medium text-gray-700 dark:text-gray-200 transition-colors bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600"
                   >
                     취소
                   </button>
                   <button
                     type="submit"
                     className="px-6 py-3 font-medium text-white transition-shadow rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:shadow-lg disabled:opacity-70"
-                    disabled={!title || !content || !selectedCategory || !thumbnail}
+                    disabled={
+                      !title || !content || !selectedCategory || !thumbnail
+                    }
                   >
                     포스트 저장
                   </button>
