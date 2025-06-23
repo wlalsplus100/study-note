@@ -1,0 +1,36 @@
+@import 'tailwindcss';
+
+:root {
+  --color-primary: 99 102 241;
+  --color-primary-dark: 139 92 246;
+  --color-background: 255 255 255;
+  --color-foreground: 17 24 39;
+  --color-muted: 243 244 246;
+  --color-muted-foreground: 107 114 128;
+  --color-border: 229 231 235;
+  --color-accent: 249 250 251;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: 139 92 246;
+    --color-primary-dark: 168 85 247;
+    --color-background: 17 24 39;
+    --color-foreground: 243 244 246;
+    --color-muted: 31 41 55;
+    --color-muted-foreground: 156 163 175;
+    --color-border: 55 65 81;
+    --color-accent: 31 41 55;
+  }
+}
+
+body {
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 다크모드 전환 애니메이션 */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}

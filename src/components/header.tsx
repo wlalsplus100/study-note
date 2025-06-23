@@ -25,7 +25,7 @@ const Header = () => {
   }, [location]);
 
   return (
-    <header className="bg-white bg-opacity-70 backdrop-blur-md shadow-lg fixed w-full top-0 z-10">
+    <header className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-md shadow-lg fixed w-full top-0 z-10 border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <motion.div
           initial={{ opacity: 0 }}
@@ -49,10 +49,10 @@ const Header = () => {
               <li key={tab.title} className="relative">
                 <Link
                   to={tab.link}
-                  className={`block px-2 py-1 text-lg font-medium capitalize ${
+                  className={`block px-2 py-1 text-lg font-medium capitalize transition-colors ${
                     activeTab === tab.title
-                      ? "text-indigo-600"
-                      : "text-gray-600 hover:text-indigo-500"
+                      ? "text-indigo-600 dark:text-indigo-400"
+                      : "text-gray-600 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
                   }`}
                   onClick={() => setActiveTab(tab.title)}
                   onMouseEnter={() => setHoveredTab(tab.title)}
@@ -63,7 +63,7 @@ const Header = () => {
                   hoveredTab === tab.title ? (
                     <motion.div
                       layoutId="underline"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 dark:bg-indigo-400"
                       transition={{
                         type: "spring",
                         stiffness: 500,
@@ -78,7 +78,7 @@ const Header = () => {
         </nav>
 
         <div className="md:hidden">
-          <button className="text-gray-700 hover:text-indigo-600">
+          <button className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"

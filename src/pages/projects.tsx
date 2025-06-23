@@ -8,7 +8,7 @@ function Projects() {
   const projects = projectData?.data;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <Header />
 
       <main className="container px-4 pt-24 pb-12 mx-auto">
@@ -22,7 +22,7 @@ function Projects() {
             <h1 className="mb-4 text-4xl font-extrabold text-transparent md:text-6xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-500 bg-clip-text">
               프로젝트 포트폴리오
             </h1>
-            <p className="mb-8 text-xl text-gray-600 md:text-2xl">
+            <p className="mb-8 text-xl text-gray-600 dark:text-gray-300 md:text-2xl">
               지금까지 진행한 다양한 개발 프로젝트들을 소개합니다. 기술 스택과
               과정을 공유합니다.
             </p>
@@ -56,32 +56,38 @@ function Projects() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="overflow-hidden transition-shadow bg-white shadow-md rounded-2xl hover:shadow-xl"
+                  className="overflow-hidden transition-shadow bg-white dark:bg-gray-800 shadow-md rounded-2xl hover:shadow-xl border border-gray-200 dark:border-gray-700"
                 >
                   <div className="overflow-hidden h-60">
                     <img
-                      src={project?.thumbnail?.startsWith('/') 
-                        ? `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${project.thumbnail}`
-                        : project.thumbnail}
+                      src={
+                        project?.thumbnail?.startsWith("/")
+                          ? `${import.meta.env.VITE_BASE_URL.slice(0, -1)}${
+                              project.thumbnail
+                            }`
+                          : project.thumbnail
+                      }
                       alt={project.title}
                       className="object-cover w-full h-full transition-transform duration-500 transform hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="mb-3 text-2xl font-bold text-gray-800">
+                    <h3 className="mb-3 text-2xl font-bold text-gray-800 dark:text-gray-100">
                       {project.title}
                     </h3>
-                    <p className="mb-4 text-gray-600">{project.description}</p>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300">
+                      {project.description}
+                    </p>
 
                     <div className="mb-6">
-                      <h4 className="mb-2 text-sm font-semibold text-gray-500">
+                      <h4 className="mb-2 text-sm font-semibold text-gray-500 dark:text-gray-400">
                         기술 스택
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {project.techStack?.map((tech) => (
                           <span
                             key={tech}
-                            className="px-3 py-1 text-sm text-indigo-600 bg-indigo-100 rounded-full"
+                            className="px-3 py-1 text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 rounded-full"
                           >
                             {tech}
                           </span>
@@ -94,7 +100,7 @@ function Projects() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center px-4 py-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                        className="flex items-center px-4 py-2 text-white transition-colors bg-gray-800 dark:bg-gray-700 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600"
                       >
                         <svg
                           className="w-5 h-5 mr-2"

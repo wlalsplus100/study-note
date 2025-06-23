@@ -2,7 +2,7 @@ import { Github, Insta } from "../assets";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-12">
+    <footer className="bg-gray-900 dark:bg-gray-950 text-gray-300 py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -12,20 +12,20 @@ const Footer = () => {
               </div>
               <h2 className="text-xl font-bold text-white">MinLog</h2>
             </div>
-            <p className="text-gray-400 mb-4">
+            <p className="text-gray-400 dark:text-gray-300 mb-4">
               교과내용 정리, 프론트엔드 정리 <br />그 외 잡다한 이야기를 모두
               다룹니다.
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                href="https://www.instagram.com/ballcirclejimin/"
+                className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
               >
                 <Insta />
               </a>
               <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                href="https://www.github.com/wlalsplus100"
+                className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
               >
                 <Github />
               </a>
@@ -38,7 +38,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/blog?category=국어"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   국어
                 </a>
@@ -46,7 +46,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/blog?category=수학"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   수학
                 </a>
@@ -54,7 +54,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/blog?category=사회"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   사회
                 </a>
@@ -62,7 +62,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/blog?category=과학"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   과학
                 </a>
@@ -70,7 +70,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/blog?category=개발"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   개발
                 </a>
@@ -78,7 +78,7 @@ const Footer = () => {
               <li>
                 <a
                   href="/blog?category=잡담"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   잡담
                 </a>
@@ -93,26 +93,18 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  href="/about"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   소개
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  href="/projects"
+                  className="text-gray-400 dark:text-gray-300 hover:text-white transition-colors"
                 >
                   프로젝트
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  포트폴리오
                 </a>
               </li>
             </ul>
@@ -120,19 +112,19 @@ const Footer = () => {
 
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">연락처</h3>
-            <p className="text-gray-400 mb-2">
+            <p className="text-gray-400 dark:text-gray-300 mb-2">
               궁금한 점이나 협업 제안은 언제든지 연락주세요.
             </p>
             <a
               href="mailto:jiminelp@dsm.hs.kr"
-              className="text-indigo-400 hover:text-indigo-300 transition-colors"
+              className="text-indigo-400 dark:text-indigo-300 hover:text-indigo-300 dark:hover:text-indigo-200 transition-colors"
             >
               jiminelp@dsm.hs.kr
             </a>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+        <div className="border-t border-gray-800 dark:border-gray-700 mt-12 pt-8 text-center text-gray-400 dark:text-gray-300">
           <p>© 2025 MinLog. All rights reserved.</p>
         </div>
       </div>

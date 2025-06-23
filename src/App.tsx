@@ -20,7 +20,7 @@ function App() {
   }, [posts, projects]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
       <Header />
 
       <main className="container px-4 pt-24 pb-12 mx-auto">
@@ -34,7 +34,7 @@ function App() {
             <h1 className="mb-4 text-4xl font-extrabold text-transparent md:text-6xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-500 bg-clip-text">
               지금까지 공부했던 많은 것들
             </h1>
-            <p className="mb-8 text-xl text-gray-600 md:text-2xl">
+            <p className="mb-8 text-xl text-gray-600 dark:text-gray-300 md:text-2xl">
               교과내용 정리, 프론트엔드 정리 그 외 잡다한 이야기를 모두
               다룹니다.
             </p>
@@ -51,10 +51,12 @@ function App() {
         <section className="py-12">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-12">
-              <h2 className="text-3xl font-bold text-gray-800">최신 포스트</h2>
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                최신 포스트
+              </h2>
               <a
                 href="/blog"
-                className="flex items-center text-indigo-600 hover:text-indigo-800"
+                className="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
               >
                 모든 글 보기
                 <svg
@@ -83,13 +85,15 @@ function App() {
           </div>
         </section>
 
-        <section className="py-16 mb-16 bg-white shadow-lg rounded-3xl">
+        <section className="py-16 mb-16 bg-white dark:bg-gray-800 shadow-lg rounded-3xl border border-gray-200 dark:border-gray-700">
           <div className="max-w-6xl px-6 mx-auto">
             <div className="flex items-center justify-between mb-12">
-              <h2 className="text-3xl font-bold text-gray-800">프로젝트</h2>
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                프로젝트
+              </h2>
               <a
                 href="/projects"
-                className="flex items-center text-indigo-600 hover:text-indigo-800"
+                className="flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300"
               >
                 모든 프로젝트 보기
                 <svg
@@ -114,7 +118,7 @@ function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="overflow-hidden transition-shadow shadow-md bg-gradient-to-br from-white to-gray-50 rounded-xl hover:shadow-xl"
+                  className="overflow-hidden transition-shadow shadow-md bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-600 rounded-xl hover:shadow-xl border border-gray-200 dark:border-gray-600"
                 >
                   <div className="h-48 overflow-hidden">
                     <img
@@ -126,15 +130,17 @@ function App() {
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="mb-2 text-xl font-bold text-gray-800">
+                    <h3 className="mb-2 text-xl font-bold text-gray-800 dark:text-gray-100">
                       {project.title}
                     </h3>
-                    <p className="mb-4 text-gray-600">{project.description}</p>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300">
+                      {project.description}
+                    </p>
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.techStack?.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 text-sm text-indigo-600 bg-indigo-100 rounded-full"
+                          className="px-3 py-1 text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 rounded-full"
                         >
                           {tech}
                         </span>
@@ -145,7 +151,7 @@ function App() {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-gray-700 hover:text-indigo-600"
+                        className="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +169,7 @@ function App() {
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-gray-700 hover:text-indigo-600"
+                        className="flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

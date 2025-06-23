@@ -11,6 +11,6 @@ export const useCategories = () => {
 export const useCategory = (id: string) => {
   return useQuery({
     queryKey: ["getCategory", id],
-    queryFn: () => getCategory(id),
+    queryFn: () => getCategory(Number(id)),
   });
 };

@@ -64,7 +64,7 @@ function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <Header />
 
       <main className="container mx-auto px-4 pt-24 pb-12">
@@ -79,10 +79,10 @@ function AboutPage() {
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-500 text-transparent bg-clip-text">
               {personalInfo.name}
             </h1>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-700 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-200 mb-6">
               {personalInfo.title}
             </h2>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8">
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
               {personalInfo.bio}
             </p>
             <div className="flex flex-col md:flex-row justify-center gap-4">
@@ -96,7 +96,7 @@ function AboutPage() {
                 href={`https://${personalInfo.github}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-3 rounded-full border-2 border-indigo-600 text-indigo-600 font-medium hover:bg-indigo-50 transition-colors"
+                className="px-8 py-3 rounded-full border-2 border-indigo-600 dark:border-indigo-400 text-indigo-600 dark:text-indigo-400 font-medium hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
               >
                 GitHub 방문하기
               </a>
@@ -105,15 +105,17 @@ function AboutPage() {
         </section>
 
         {/* 스킬 섹션 */}
-        <section className="py-16 bg-white rounded-3xl shadow-lg mb-16">
+        <section className="py-16 bg-white dark:bg-gray-800 rounded-3xl shadow-lg mb-16 border border-gray-200 dark:border-gray-700">
           <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">기술 스택</h2>
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+              기술 스택
+            </h2>
 
             {/* 카테고리별 스킬 그룹화 */}
             {Array.from(new Set(skills.map((skill) => skill.category))).map(
               (category) => (
                 <div key={category} className="mb-12">
-                  <h3 className="text-xl font-semibold text-gray-700 mb-6">
+                  <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-6">
                     {category}
                   </h3>
                   <div className="flex flex-wrap gap-3">
@@ -134,9 +136,9 @@ function AboutPage() {
         </section>
 
         {/* 학력 및 경력 섹션 */}
-        <section className="py-16 bg-white rounded-3xl shadow-lg mb-16">
+        <section className="py-16 bg-white dark:bg-gray-800 rounded-3xl shadow-lg mb-16 border border-gray-200 dark:border-gray-700">
           <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8">
               학력 및 경력
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -144,15 +146,19 @@ function AboutPage() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 shadow-md"
+                className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-600 rounded-xl p-6 shadow-md border border-gray-200 dark:border-gray-600"
               >
-                <h3 className="text-xl font-bold text-gray-800 mb-4">학력</h3>
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+                  학력
+                </h3>
                 <div className="mb-4">
-                  <h4 className="font-medium text-indigo-600">
+                  <h4 className="font-medium text-indigo-600 dark:text-indigo-400">
                     {education.university}
                   </h4>
-                  <p className="text-gray-700">{education.major} 전공</p>
-                  <p className="text-gray-500">
+                  <p className="text-gray-700 dark:text-gray-300">
+                    {education.major} 전공
+                  </p>
+                  <p className="text-gray-500 dark:text-gray-400">
                     졸업년도: {education.graduation}
                   </p>
                 </div>
@@ -162,14 +168,22 @@ function AboutPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 shadow-md"
+                className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-600 rounded-xl p-6 shadow-md border border-gray-200 dark:border-gray-600"
               >
-                <h3 className="text-xl font-bold text-gray-800 mb-4">경력</h3>
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+                  경력
+                </h3>
                 <div className="mb-4">
-                  <h4 className="font-medium text-indigo-600">엔트리</h4>
-                  <p className="text-gray-700">프론트엔드 엔지니어</p>
-                  <p className="text-gray-500">2024년 - 현재</p>
-                  <p className="text-gray-600 mt-2">
+                  <h4 className="font-medium text-indigo-600 dark:text-indigo-400">
+                    엔트리
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    프론트엔드 엔지니어
+                  </p>
+                  <p className="text-gray-500 dark:text-gray-400">
+                    2024년 - 현재
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-2">
                     React와 TypeScript를 활용한 서비스 개발 및 디버깅 작업 수행
                   </p>
                 </div>
@@ -179,9 +193,9 @@ function AboutPage() {
         </section>
 
         {/* 취미 섹션 */}
-        <section className="py-16 bg-white rounded-3xl shadow-lg mb-16">
+        <section className="py-16 bg-white dark:bg-gray-800 rounded-3xl shadow-lg mb-16 border border-gray-200 dark:border-gray-700">
           <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8">
               취미 및 관심사
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -191,13 +205,15 @@ function AboutPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 shadow-md text-center"
+                  className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-600 rounded-xl p-6 shadow-md text-center border border-gray-200 dark:border-gray-600"
                 >
                   <div className="text-4xl mb-4">{hobby.icon}</div>
-                  <h3 className="text-lg font-medium text-gray-800 mb-2">
+                  <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-2">
                     {hobby.name}
                   </h3>
-                  <p className="text-gray-600">{hobby.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {hobby.description}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -212,10 +228,10 @@ function AboutPage() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">
               함께 일해요!
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               새로운 프로젝트나 협업 기회에 대해 언제든지 연락주세요.
             </p>
             <div className="flex flex-col md:flex-row justify-center gap-4">

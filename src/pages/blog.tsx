@@ -73,7 +73,7 @@ function BlogPage() {
   }, [activeCategory, searchQuery, allPosts]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <Header />
 
       <main className="container mx-auto px-4 pt-24 pb-12">
@@ -87,7 +87,7 @@ function BlogPage() {
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-500 text-transparent bg-clip-text">
               블로그 포스트
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               교과내용부터 개발, 그리고 일상까지 다양한 주제의 글을 만나보세요.
             </p>
           </motion.div>
@@ -95,7 +95,7 @@ function BlogPage() {
 
         <section className="mb-12">
           <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white rounded-xl shadow-md p-6">
+            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-200 dark:border-gray-700">
               <div className="w-full md:w-1/2">
                 <div className="relative">
                   <input
@@ -103,9 +103,9 @@ function BlogPage() {
                     placeholder="검색어를 입력하세요"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full py-3 pl-4 pr-10 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full py-3 pl-4 pr-10 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
-                  <div className="absolute right-3 top-3 text-gray-400">
+                  <div className="absolute right-3 top-3 text-gray-400 dark:text-gray-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
@@ -132,7 +132,7 @@ function BlogPage() {
                     className={`px-4 py-2 rounded-full font-medium transition-all ${
                       activeCategory === category
                         ? "bg-indigo-600 text-white shadow-md"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                     }`}
                   >
                     {category === "all" ? "전체" : category}
@@ -188,10 +188,10 @@ function BlogPage() {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8 text-gray-400"
+                    className="h-8 w-8 text-gray-400 dark:text-gray-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -204,10 +204,10 @@ function BlogPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-700 mb-2">
+                <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">
                   검색 결과가 없습니다
                 </h3>
-                <p className="text-gray-500 mb-4">
+                <p className="text-gray-500 dark:text-gray-400 mb-4">
                   다른 키워드나 카테고리로 검색해 보세요.
                 </p>
                 <button
@@ -215,7 +215,7 @@ function BlogPage() {
                     setActiveCategory("all");
                     setSearchQuery("");
                   }}
-                  className="px-4 py-2 text-indigo-600 font-medium hover:text-indigo-800 transition-colors"
+                  className="px-4 py-2 text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
                 >
                   모든 글 보기
                 </button>
